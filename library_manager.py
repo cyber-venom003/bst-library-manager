@@ -1,5 +1,3 @@
-##### Add your functions here!
-
 class BookNode:
     """The class BookNode will represent each book in the library."""
     def __init__(self, book_id, title, author, isbn):
@@ -88,4 +86,5 @@ class LibraryBST:
         return current
 
     
-# LibraryBST._addBookRec(LibraryBST.root, 1, "Book One", "Author A", "ISBN001")
+
+
