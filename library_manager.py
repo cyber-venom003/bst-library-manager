@@ -86,5 +86,57 @@ class LibraryBST:
         return current
 
     
+    def _borrowBook(self, p_node, book_id, patron_id):
+        # Base case: when the tree is empty
+        if p_node is None:
+            return "Book not found."
 
+        # Traverse the tree to find the book with the given book_id
+        if book_id < p_node.book_id:
+            return self._borrowBook(p_node.left, book_id, patron_id)
+        elif book_id > p_node.book_id:
+            return self._borrowBook(p_node.right, book_id, patron_id)
+        else:
+            # Case when the book_id matches the current node's book_id
+            if len(p_node.borrowed_books) > 0:
+                return "Book is already borrowed."
+            else:
+                p_node.borrowed_books.append(patron_id)
+                return "Book borrowed successfully."
 
+    def _returnBook(self, p_node, book_id, patron_id):
+        # Base case: when the tree is empty
+        if p_node is None:
+            return "Book not found."
+
+        # Traverse the tree to find the book with the given book_id
+        if book_id < p_node.book_id:
+            return self._returnBook(p_node.left, book_id, patron_id)
+        elif book_id > p_node.book_id:
+            return self._returnBook(p_node.right, book_id, patron_id)
+        else:
+            # Case when the book_id matches the current node's book_id
+            if patron_id in p_node.borrowed_books:
+                p_node.borrowed_books.remove(patron_id)
+                return "Book returned successfully."
+            else:
+                return "This patron did not borrow the book."
+    
+    def _searchBook(self, pNode, bookId):
+        # Base case: when the tree is empty
+        if pNode is None:
+            return "Book not found."
+
+        # Traverse the tree to find the book with the given bookId
+        if bookId < pNode.book_id:
+            return self._searchBook(pNode.left, bookId)
+        elif bookId > pNode.book_id:
+            return self._searchBook(pNode.right, bookId)
+        else:
+            # Case when the bookId matches the current node's bookId
+            if len(pNode.borrowed_books) > 0:
+                availability = "Not available"
+            else:
+                availability = "Available"
+            return f"Title: {pNode.title}\nAuthor: {pNode.author}\nISBN: {pNode.isbn}\nAvailability: {availability}"
+            
