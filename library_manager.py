@@ -139,4 +139,27 @@ class LibraryBST:
             else:
                 availability = "Available"
             return f"Title: {pNode.title}\nAuthor: {pNode.author}\nISBN: {pNode.isbn}\nAvailability: {availability}"
-            
+
+    def _listAvailableBooks(self, pNode):
+        available_books = []
+        if pNode:
+            if pNode.available:
+                available_books.append(f"Book ID {pNode.bookId}: \"{pNode.title}\" by {pNode.author}")
+            return self._listAvailableBooks(pNode.left)
+            return self._listAvailableBooks(pNode.right)
+
+        if available_books:
+            return "Available Books:\n" + "\n".join(available_books)
+        return "No available books."
+
+    def _listBooksByAuthor(self, pNode, authorName):
+        books_by_author = []
+        if pNode:
+            if pNode.author == authorName:
+                books_by_author.append(f"Book ID {pNode.bookId}: \"{pNode.title}\" by {pNode.author}")
+            return self._listBooksByAuthor(pNode.left, authorName)
+            return self._listBooksByAuthor(pNode.right, authorName)
+
+        if books_by_author:
+            return f"Books by Author \"{authorName}\":\n" + "\n".join(books_by_author)
+        return f"No books found by {authorName}."
