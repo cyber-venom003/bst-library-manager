@@ -163,3 +163,21 @@ class LibraryBST:
         if books_by_author:
             return f"Books by Author \"{authorName}\":\n" + "\n".join(books_by_author)
         return f"No books found by {authorName}."
+    
+    def _listPatronsBooks(self, pNode, patronId):
+    if pNode is None:
+        return []
+    borrowed_books = []
+    # Check if the current node has books borrowed by the specified patron.
+    if pNode.patronId == patronId:
+        for book in pNode.borrowedBooks:
+            borrowed_books.append({
+                'bookId': book.bookId,
+                'title': book.title
+            })
+
+    # Recurse to the left and right child nodes if applicable.
+    borrowed_books += self._listPatronsBooks(pNode.left, patronId)
+    borrowed_books += self._listPatronsBooks(pNode.right, patronId)
+
+    return borrowed_books
